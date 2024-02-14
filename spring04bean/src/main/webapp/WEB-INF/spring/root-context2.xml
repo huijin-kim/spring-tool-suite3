@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 	TestBean3 tb03 = new TestBean3(); -->
+<!-- 	tb03.setName("kim"); -->
+<!-- 	tb03.setAge(33); -->
+	<bean id="tb03" class="test.com.bean.TestBean3">
+		<property name="name" value="yangssem"></property>
+		<property name="age" value="44"></property>
+	</bean>
+	
+<!-- 	TestBean4 tb04 = new TestBean4(); -->
+<!-- 	tb04.setPerson(new Person("busan","051")); -->
+
+	<bean id="person" class="test.com.bean.Person">
+		<constructor-arg>
+			<value>busan</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>051</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="tb04" class="test.com.bean.TestBean4">
+<!-- 		<property name="person" ref="person"></property> -->
+		<property name="person" >
+			<ref bean="person"/>
+		</property>
+	</bean>
+
+</beans>

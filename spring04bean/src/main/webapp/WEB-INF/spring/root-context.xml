@@ -2,8 +2,45 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- <bean id="tb01" class="text.com.bean.TestBean"></bean> -->
-	<!-- TestBean tb01 = new TestBean(); //객체 생성을 위와 같이 설정함 -->
+
+	<!-- TestBean tb01 = new TestBean(); -->
+	<bean id="tb01" class="test.com.bean.TestBean"></bean>
+
+	<!-- TestBean tb02 = new TestBean("kim",33); -->
+	<bean id="tb02" class="test.com.bean.TestBean">
+		<!-- <constructor-arg value="kim"></constructor-arg> -->
+		<constructor-arg>
+			<value>kim</value>
+		</constructor-arg>
+		<!-- <constructor-arg value="33"></constructor-arg> -->
+		<constructor-arg>
+			<value>33</value>
+		</constructor-arg>
+
+	</bean>
+
+	<!-- Person p01 = new Person(); -->
+	<bean id="p01" class="test.com.bean.Person"></bean>
+
+
+	<!-- Person p02 = new Person("seoul","02"); -->
+	<bean id="p02" class="test.com.bean.Person">
+		<constructor-arg>
+			<value>seoul</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>02</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- Employee emp01 = new Employee(p02); -->
+	<bean id="emp01" class="test.com.bean.Employee">
+		<!-- <constructor-arg ref="p02"></constructor-arg> -->
+		<constructor-arg>
+			<ref bean="p02" />
+		</constructor-arg>
+	</bean>
+
 </beans>

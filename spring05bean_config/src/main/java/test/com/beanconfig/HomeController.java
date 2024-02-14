@@ -1,4 +1,4 @@
-package test.com.bean;
+package test.com.beanconfig;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -20,32 +20,23 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@Autowired
-	private TestBean tb01;//xml bean id와 매칭
 	
 	@Autowired
-	private TestBean tb02;//xml bean id와 매칭
-	
+	private TestBean tb01;
 	@Autowired
 	private Person p01;
 	
 	@Autowired
-	private Person p02;
+	private Employee emp;
 	
 	@Autowired
-	private Employee emp01;
-	
-	@Autowired
-	private TestBean3 tb03;
+	private TestBean tb03;
 	
 	@Autowired
 	private TestBean4 tb04;
-
+	
 	@Autowired
 	private TestBean5 tb05;
-	
-	
-	
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -55,17 +46,10 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		logger.info(tb01.toString());
-		tb01.test();
-		
-		logger.info(tb02.toString());
-		tb02.test();
-		
-		
-		logger.info(p01.toString());//[address=null, tel=null]
-		logger.info(p02.toString());//[address=seoul, tel=02]
-		logger.info(emp01.toString());//[p=Person [address=seoul, tel=02]]
-		logger.info(tb03.toString());//TestBean3 [name=yangssem, age=44]
-		logger.info(tb04.toString());//TestBean4 [person=Person [address=busan, tel=051]]
+		logger.info(p01.toString());
+		logger.info(emp.toString());
+		logger.info(tb03.toString());
+		logger.info(tb04.toString());
 		logger.info(tb05.toString());
 		
 		Date date = new Date();

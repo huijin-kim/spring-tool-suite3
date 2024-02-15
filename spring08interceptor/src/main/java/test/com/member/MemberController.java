@@ -2,6 +2,10 @@ package test.com.member;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +25,10 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
+	//HttpSession 은 내부 빈으로 등록되어있다. DI만 해서 사용가능
+	@Autowired
+	private HttpSession session;
+
 	public MemberController() {
 		log.info("MemberController()....");
 	}
@@ -77,8 +85,8 @@ public class MemberController {
 		log.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
 		log.info("searchKey : {}, searchWord : {}", searchKey, searchWord);
 
-		List<MemberVO> vos = service.searchList(searchKey, searchWord);
-//		List<MemberVO> vos = service.searchList(searchKey, searchWord, cpage, pageBlock);
+//		List<MemberVO> vos = service.searchList(searchKey, searchWord);
+		List<MemberVO> vos = service.searchList(searchKey, searchWord, cpage, pageBlock);
 		for (MemberVO x : vos) {
 			log.info(x.toString());
 		}
@@ -128,98 +136,107 @@ public class MemberController {
 			return "redirect:m_insert.do";
 		}
 	}
-	
+
 	@RequestMapping(value = "m_updateOK.do", method = RequestMethod.POST)
 //	public String m_updateOK(@RequestParam(defaultValue = "0")int num, String id, String pw, String name, String tel) {
 	public String m_updateOK(MemberVO vo) {
 		log.info("Welcome m_updateOK.do....");
-		
-		log.info(""+vo);
-				
+
+		log.info("" + vo);
+
 		int result = service.update(vo);
 		log.info("result:" + result);
 		System.out.println("================");
-		
+
 		if (result == 1) {
-			return "redirect:m_selectOne.do?num="+vo.getNum();
+			return "redirect:m_selectOne.do?num=" + vo.getNum();
 		} else {
-			return "redirect:m_update.do?num="+vo.getNum();
+			return "redirect:m_update.do?num=" + vo.getNum();
 		}
 	}
-	
+
 	@RequestMapping(value = "m_deleteOK.do", method = RequestMethod.POST)
 //	public String m_deleteOK(@RequestParam(defaultValue = "0")int num) {
 	public String m_deleteOK(MemberVO vo) {
 		log.info("Welcome m_deleteOK.do....");
-		
-		log.info(""+vo);
-		
+
+		log.info("" + vo);
+
 		int result = service.delete(vo);
 		log.info("result:" + result);
 		System.out.println("================");
-		
+
 		if (result == 1) {
 			return "redirect:m_selectAll.do";
 		} else {
-			return "redirect:m_delete.do?num="+vo.getNum();
+			return "redirect:m_delete.do?num=" + vo.getNum();
 		}
 	}
 
 	@RequestMapping(value = "m_selectOne.do", method = RequestMethod.GET)
 //	public String m_selectOne(@RequestParam(defaultValue = "0") int num,Model model) {
-	public String m_selectOne(MemberVO vo,Model model) {
+	public String m_selectOne(MemberVO vo, Model model) {
 		log.info("Welcome m_selectOne.do....");
 
-		log.info("vo : {}",vo);
-		
+		log.info("vo : {}", vo);
+
 		MemberVO vo2 = service.selectOne(vo);
 		log.info("vo2:" + vo2);
 		log.info("================");
-		
+
 		model.addAttribute("vo2", vo2);
 
 		return "member/selectOne";
 	}
-	
+
 	@RequestMapping(value = "loginOK.do", method = RequestMethod.POST)
 //	public String loginOK(String id,String pw) {
 	public String loginOK(MemberVO vo) {
 		log.info("Welcome loginOK.do....");
-		
-		log.info("vo : {}",vo);
-		
+
+		log.info("vo : {}", vo);
+
 		MemberVO vo2 = service.login(vo);
 		log.info("vo2:" + vo2);
 		log.info("================");
-		
-		if(vo2 == null) {
+
+		if (vo2 == null) {
 			return "redirect:login.do";
-		}else {
+		} else {
+			session.setAttribute("user_id",vo.getId());
 			return "redirect:index.do";
 		}
 	}
-	
-	
+
 	@RequestMapping(value = "m_update.do", method = RequestMethod.GET)
-	public String m_update(MemberVO vo,	Model model) {
+	public String m_update(MemberVO vo, Model model) {
 		log.info("Welcome m_update.do....");
-		
-		log.info("vo : {}",vo);
-		
+
+		log.info("vo : {}", vo);
+
 		MemberVO vo2 = service.selectOne(vo);
 		log.info("vo2:" + vo2);
 		log.info("================");
-		
+
 		model.addAttribute("vo2", vo2);
-		
+
 		return "member/update";
 	}
-	
+
 	@RequestMapping(value = "m_delete.do", method = RequestMethod.GET)
 	public String m_delete() {
 		log.info("Welcome m_delete.do....");
-		
+
 		return "member/delete";
+	}
+	
+	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
+	public String logout() {
+		log.info("Welcome logout.do....");
+		
+		session.removeAttribute("user_id");
+		
+		return "redirect:index.do";
 	}
 
 }// end class

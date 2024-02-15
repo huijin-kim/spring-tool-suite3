@@ -1,7 +1,9 @@
 package test.com.member;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -28,9 +30,10 @@ public class MemberDAOimpl implements MemberDAO {
 		logger.info("insert()....");
 		logger.info(vo.toString());
 
-		int flag = sqlSession.insert("INSERT", vo);
-		logger.info("flag : {}", flag);
-
+		int flag = sqlSession.insert("INSERT",vo);
+		
+		logger.info("flag : {}",flag);
+		
 		return flag;
 	}
 
@@ -39,9 +42,8 @@ public class MemberDAOimpl implements MemberDAO {
 		logger.info("update()....");
 		logger.info(vo.toString());
 
-		int flag = 0;
-		
-		
+		int flag = sqlSession.update("UPDATE",vo);
+		logger.info("flag : {}",flag);
 		
 		return flag;
 	}
@@ -51,10 +53,8 @@ public class MemberDAOimpl implements MemberDAO {
 		logger.info("delete()....");
 		logger.info(vo.toString());
 
-		int flag = 0;
-
-		
-		
+		int flag = sqlSession.delete("DELETE",vo);
+		logger.info("flag : {}",flag);
 
 		return flag;
 	}
@@ -64,9 +64,7 @@ public class MemberDAOimpl implements MemberDAO {
 		logger.info("selectOne()....");
 		logger.info(vo.toString());
 
-		MemberVO vo2 = new MemberVO();
-		
-		
+		MemberVO vo2 = sqlSession.selectOne("SELECT_ONE",vo);
 		
 		return vo2;
 	}
@@ -74,17 +72,15 @@ public class MemberDAOimpl implements MemberDAO {
 	@Override
 	public List<MemberVO> selectAll() {
 		logger.info("selectAll()....");
-		List<MemberVO> vos = new ArrayList<MemberVO>();
-
 		
-		
+		List<MemberVO> vos = sqlSession.selectList("SELECT_ALL");
 
 		return vos;
 	}
 
 	@Override
 	public List<MemberVO> searchList(String searchKey, String searchWord) {
-		logger.info("searchList()....");
+		logger.info("searchList()....2");
 		logger.info(searchKey);
 		logger.info(searchWord);
 		
@@ -124,7 +120,12 @@ public class MemberDAOimpl implements MemberDAO {
 		int endRow = startRow + pageBlock -1;
 		logger.info(startRow+","+ endRow);
 		
-		List<MemberVO> vos = new ArrayList<MemberVO>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		
+		
+		List<MemberVO> vos = sqlSession.selectList("SELECT_ALL_PAGE_BLOCK",map);
 		
 		
 
@@ -153,7 +154,7 @@ public class MemberDAOimpl implements MemberDAO {
 
 	@Override
 	public List<MemberVO> searchList(String searchKey, String searchWord, int cpage, int pageBlock) {
-		logger.info("searchList()....");
+		logger.info("searchList()....4");
 		logger.info(searchKey);
 		logger.info(searchWord);
 		

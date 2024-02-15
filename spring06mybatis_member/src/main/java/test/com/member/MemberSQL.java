@@ -11,7 +11,7 @@ public interface MemberSQL {
 	String SELECT_ONE = "select * from member where num=?";
 	String LOGIN = "select * from member where id=? and pw=?";
 
-	String SELECT_ALL = "select * from member order by num asc";
+	String SELECT_ALL = "select * from member order by num desc";
 
 	String SEARCHLIST_ID = "select * from member where id like ?";
 

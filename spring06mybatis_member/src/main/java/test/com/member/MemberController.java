@@ -43,6 +43,7 @@ public class MemberController {
 
 		logger.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
 
+//		List<MemberVO> vos = service.selectAll();
 		List<MemberVO> vos = service.selectAll(cpage, pageBlock);
 		for (MemberVO x : vos) {
 			logger.info(x.toString());
@@ -77,7 +78,8 @@ public class MemberController {
 		logger.info("cpage : {}, pageBlock : {}", cpage, pageBlock);
 		logger.info("searchKey : {}, searchWord : {}", searchKey, searchWord);
 
-		List<MemberVO> vos = service.searchList(searchKey, searchWord, cpage, pageBlock);
+		List<MemberVO> vos = service.searchList(searchKey, searchWord);
+//		List<MemberVO> vos = service.searchList(searchKey, searchWord, cpage, pageBlock);
 		for (MemberVO x : vos) {
 			logger.info(x.toString());
 		}

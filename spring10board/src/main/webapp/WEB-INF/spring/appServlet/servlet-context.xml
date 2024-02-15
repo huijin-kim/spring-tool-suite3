@@ -24,5 +24,4 @@
 	<context:component-scan base-package="test.com.board" />
 	
 	
-	
 </beans:beans>

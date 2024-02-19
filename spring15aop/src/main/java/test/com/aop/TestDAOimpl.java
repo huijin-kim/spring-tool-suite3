@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Repository
-public class TestDAOimple implements TestDAO {
+public class TestDAOimpl implements TestDAO {
 
 	@Override
 	public int insert(TestVO vo) {

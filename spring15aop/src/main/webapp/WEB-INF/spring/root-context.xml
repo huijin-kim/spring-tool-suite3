@@ -8,6 +8,12 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<aop:aspectj-autoproxy />
 	
+	<bean id="dao" class="test.com.aop.TestDAOimpl"></bean>
 	
+	<bean id="testBeforeAspect" class="test.com.aop.TestBeforeAspect"></bean>
+	<bean id="testAftereAspect" class="test.com.aop.TestAfterAspect"></bean>
+	
+	<bean id="testAroundAspect" class="test.com.aop.TestAroundAspect"></bean>
+	<bean id="testPointCutAspect" class="test.com.aop.TestPointCutAspect"></bean>
 	
 </beans>
